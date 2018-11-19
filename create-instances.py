@@ -8,5 +8,5 @@ instance = ec2.create_instances(
     ImageId='ami-1e299d7e',
     MinCount=1,
     MaxCount=1,
-    InstanceType='t2.micro')
+    InstanceType='m1.large')
 print instance[0].id
