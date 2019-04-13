@@ -1,6 +1,7 @@
 #!/usr/local/bin/python
 import boto3
 
+### get_asgs_with_instances_lambda.py : It is lambda function helps to get the running instances count based on environment and region
 def get_asgs_with_instances(env_list,  region_list):
         identified_Asg_list = ""
         for each_region in region_list :
