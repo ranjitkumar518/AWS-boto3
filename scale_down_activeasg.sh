@@ -4,7 +4,7 @@ if [ $# -lt 3 ]; then
       echo "Usage: ./scale_down_autoscaling.sh <ENV> <AWS_PROFILE> [Component] [SCALE_DOWN]"
       echo "Required: ENV, AWS_PROFILE Component"
       echo "Optional: SCALE_DOWN (Default=3)"
-      echo "Example: ./scale_down_autoscaling.sh prf2 web-app preprod"
+      echo "Example: ./scale_down_autoscaling.sh perf web-app preprod"
       exit
 fi
 
