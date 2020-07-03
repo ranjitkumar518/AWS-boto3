@@ -3,7 +3,8 @@ import boto3
 import csv, json, sys
 from boto3.dynamodb.conditions import Key
 from decimal import Decimal
-
+import datetime
+from datetime import timedelta
 
 #sys.setdefaultencoding("UTF-8") #set the encode to utf8
 fileInput = 'dynamodb_dev.json'
