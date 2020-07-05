@@ -90,3 +90,11 @@ def fetch_dns_records():
         print('An error occurred getting records from zone {}:'.format(route_53_zone_id))
         print(str(error))
         raise
+        
+def sns_notify(Subject, msg, TopicArn):
+    client = boto3.client('sns')
+    response = client.publish(
+    TopicArn = TopicArn,
+    Message = msg,
+    Subject = Subject
+)
