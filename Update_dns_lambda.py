@@ -61,3 +61,32 @@ def update_dns_record():
                 print(response['ChangeInfo'])
             except Exception as e:
                 print(e)
+                
+def fetch_dns_records():
+    paginator = client.get_paginator('list_resource_record_sets')
+
+    try:
+        msg = ''
+        source_zone_records = paginator.paginate(HostedZoneId=route_53_zone_id)
+        for record_set in source_zone_records:
+            for record in record_set['ResourceRecordSets']:
+                with open(file_path, "rt", encoding='ascii') as data:
+                    reader = csv.reader(data, delimiter=",")
+                    for source, target in reader:
+                        # Append dot to the record name
+                        source = source + '.'
+                        # if record['Name'] == source  and record['ResourceRecords'][0]['Value'] == target:
+                        if record['Name'] == source :
+                            msg = msg + '--------------------------------------------------------------------------------------------------------------------'
+                            msg= msg + '\n'
+                            # Append dns records into msg
+                            msg = msg + 'Record Name --> '+record['Name']+', Record Value -->'+ record['ResourceRecords'][0]['Value']
+                            msg= msg + '\n'
+        print(msg)
+        Subject = 'Webs Contingency disabled in ' + Environment
+        sns_notify (Subject, msg, TopicArn)
+
+    except Exception as error:
+        print('An error occurred getting records from zone {}:'.format(route_53_zone_id))
+        print(str(error))
+        raise
