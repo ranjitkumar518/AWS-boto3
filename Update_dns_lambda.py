@@ -83,7 +83,7 @@ def fetch_dns_records():
                             msg = msg + 'Record Name --> '+record['Name']+', Record Value -->'+ record['ResourceRecords'][0]['Value']
                             msg= msg + '\n'
         print(msg)
-        Subject = 'Webs Contingency disabled in ' + Environment
+        Subject = 'Updated DNS records for ' + Environment
         sns_notify (Subject, msg, TopicArn)
 
     except Exception as error:
