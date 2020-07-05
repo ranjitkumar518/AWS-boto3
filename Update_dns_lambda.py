@@ -10,6 +10,7 @@ logger.setLevel(logging.INFO)
 
 logger.info('Loading function')
 
+### Upload csv file in the s3 bucket with the list of dns records. Examplefile in repo: dns_records.csv
 
 # defining bucket name, region and config file name.
 config_s3_region = os.environ['CONFIG_S3_REGION']
