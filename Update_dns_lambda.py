@@ -98,3 +98,17 @@ def sns_notify(Subject, msg, TopicArn):
     Message = msg,
     Subject = Subject
 )
+    
+# Main function execution    
+def lambda_handler(event, context):
+    try:
+        logger.info('Reading config file {}'.format(file_path))
+        read_s3_config()
+        logger.info('Updating dns records in file {}'.format(file_path))
+        update_dns_record()
+        logger.info('Fetching the dns records from R53')
+        fetch_dns_records()
+    except Exception as e:
+        logger.error("Exception occurred.", exc_info=True)
+        returnResponse = dict(statusMessage='Failed: {}'.format(e))
+        return returnResponse
