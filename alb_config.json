@@ -1,0 +1,6 @@
+{ "configdata":
+  {
+        "env": "dev",
+        "elblist": "appelb1 appelb2 appelb3 appelb4 appelb5"
+  }
+}
