@@ -5,6 +5,12 @@ import os
 import json
 import time
 
+if len(sys.argv) != 2 :
+	usage()
+	sys.exit(0)
+
+env = sys.argv[1]
+current_region = sys.argv[2]
 
 def usage():
 	print("Usage: "+__file__+" env current_region eg: "+__file__+" prf us-west-2")
@@ -28,3 +34,4 @@ def get_asg(env, region):
 		#sys.exit(0)
 
 	return "\n ******** "+env+" has no active ASG in "+current_region+" ********"
+
