@@ -35,3 +35,7 @@ def get_asg(env, region):
 
 	return "\n ******** "+env+" has no active ASG in "+current_region+" ********"
 
+####### Filtering active ASG for current region "+current_region+" #######
+for each_asg in asg_list_current_region:
+	asg = get_asg(env, current_region)
+	print asg
