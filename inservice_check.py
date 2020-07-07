@@ -5,6 +5,7 @@ import os
 import json
 import time
 
+
 def inservice_check(elb_list, env, region):
 	"In service status"
 	print "\n ############  Retrieving service status ############ \n"
@@ -29,3 +30,23 @@ def inservice_check(elb_list, env, region):
 				continue
 	except Exception as E:
 		print E
+
+		# Program Main
+if len(sys.argv) != 2 :
+	usage()
+	sys.exit(0)
+env = sys.argv[1]
+region = sys.argv[2]
+
+# Config file name to load the list of elb
+# file_name = env+"/"+env+"_failover_config.json"
+file_name = file_name = "elb_config.json"
+
+# Read the config from file_name
+with open(file_name) as json_data:
+				data_object = json.load(json_data)
+				json_data.close()
+config_object = data_object['configdata']
+elblist = config_object['elblist'].split(' ')
+
+
