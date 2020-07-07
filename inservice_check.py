@@ -50,3 +50,5 @@ config_object = data_object['configdata']
 elblist = config_object['elblist'].split(' ')
 
 
+############### inservice_check ###############
+inservice_check(elblist, env, region)
