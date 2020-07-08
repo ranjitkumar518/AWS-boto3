@@ -2,5 +2,23 @@
   {
         "env": "dev",
         "elblist": "appelb1 appelb2 appelb3 appelb4 appelb5"
+  },
+  "asg_input":
+  {
+    "asg_list_current_region": [
+      {"name": "appName1", "min_value": 0, "max_value": 1, "desired_value": 0},
+      {"name": "appName2", "min_value": 0, "max_value": 1, "desired_value": 0},
+      {"name": "appName3", "min_value": 0, "max_value": 1, "desired_value": 0},
+      {"name": "appName4", "min_value": 0, "max_value": 1, "desired_value": 0},
+      {"name": "appName5", "min_value": 0, "max_value": 1, "desired_value": 0},
+      {"name": "appName6", "min_value": 0, "max_value": 1, "desired_value": 0}],
+
+    "asg_list_failover_region": [
+      {"name": "appName1", "min_value": 1, "max_value": 1, "desired_value": 1},
+      {"name": "appName2", "min_value": 1, "max_value": 1, "desired_value": 1},
+      {"name": "appName3", "min_value": 1, "max_value": 1, "desired_value": 1},
+      {"name": "appName4", "min_value": 1, "max_value": 1, "desired_value": 1},
+      {"name": "appName5", "min_value": 1, "max_value": 1, "desired_value": 1},
+      {"name": "appName6", "min_value": 1, "max_value": 1, "desired_value": 1}]
   }
 }
