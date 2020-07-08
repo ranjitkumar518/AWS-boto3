@@ -6,7 +6,14 @@ import json
 from configparser import ConfigParser
 import time
 
-def db_available(cluster_identifier, failover_region):
+if len(sys.argv) != 2 :
+	usage()
+	sys.exit(0)
+
+cluster_identifier = sys.argv[1]
+current_region = sys.argv[2]
+
+def db_available(cluster_identifier, current_region):
 	print "\n ###### Checking status of Database: "+cluster_identifier+" in "+failover_region+" ######\n"
 	count = 0
 	while(1) :
@@ -22,3 +29,5 @@ def db_available(cluster_identifier, failover_region):
 			continue
 		break
 	return status
+
+db_available(cluster_identifier, current_region)
