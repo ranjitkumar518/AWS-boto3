@@ -3,7 +3,6 @@ import boto3
 import sys
 import os
 import json
-from configparser import ConfigParser
 import time
 
 if len(sys.argv) != 2 :
@@ -14,10 +13,10 @@ cluster_identifier = sys.argv[1]
 current_region = sys.argv[2]
 
 def db_available(cluster_identifier, current_region):
-	print "\n ###### Checking status of Database: "+cluster_identifier+" in "+failover_region+" ######\n"
+	print "\n ###### Checking status of Database: "+cluster_identifier+" in "+current_region+" ######\n"
 	count = 0
 	while(1) :
-		client = boto3.client('rds', region_name=failover_region)
+		client = boto3.client('rds', region_name=current_region)
 		response = client.describe_db_instances(DBInstanceIdentifier=cluster_identifier)
 		status = response['DBInstances'][0]['DBInstanceStatus']
 		if status == 'available':
