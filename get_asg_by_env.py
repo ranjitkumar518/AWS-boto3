@@ -5,6 +5,10 @@ import os
 import json
 import time
 
+def usage():
+	print("Usage: "+__file__+" env current_region eg: "+__file__+" dev us-west-2")
+	exit(1)
+	
 if len(sys.argv) != 2 :
 	usage()
 	sys.exit(0)
