@@ -3,6 +3,10 @@ import boto3
 import sys
 import json
 
+def usage():
+	print("Usage: "+__file__+" zone_type eg: "+__file__+" public")
+	exit(1)
+	
 ## Pass zonetype public/private to get zone ID
 zone_type = sys.argv[1]
 
