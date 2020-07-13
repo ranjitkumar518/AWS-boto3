@@ -6,6 +6,10 @@ import json
 def usage():
 	print("Usage: "+__file__+" zone_type eg: "+__file__+" public")
 	exit(1)
+
+if len(sys.argv) != 1 :
+	usage()
+	sys.exit(0)
 	
 ## Pass zonetype public/private to get zone ID
 zone_type = sys.argv[1]
