@@ -5,6 +5,10 @@ import os
 import json
 import time
 
+def usage():
+	print("Usage: "+__file__+" cluster_identifier current_region eg: "+__file__+" database-jan10 us-west-2")
+	exit(1)
+	
 if len(sys.argv) != 2 :
 	usage()
 	sys.exit(0)
