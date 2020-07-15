@@ -31,10 +31,16 @@ def inservice_check(elb_list, env, region):
 	except Exception as E:
 		print E
 
-		# Program Main
+# Program Main
 if len(sys.argv) != 2 :
 	usage()
 	sys.exit(0)
+	
+def usage():
+	print("Usage: "+__file__+" env region eg: "+__file__+" prf us-west-2")
+	exit(1)
+	
+
 env = sys.argv[1]
 region = sys.argv[2]
 
