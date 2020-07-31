@@ -102,4 +102,31 @@ def getASGs(autoscalingClient, asgServiceTag):
             Filters=[
                 {
                     'Name': 'auto-scaling-group',
-                    'Value
+                    'Values': [
+                        asg['AutoScalingGroupName'],
+                    ]
+                },
+                {
+                    'Name': 'value',
+                    'Values': [
+                        'Active',
+                    ]
+                }
+            ]
+        )
+        if len(tagsResponse['Tags']) == 1:
+            currentActiveASG = asg['AutoScalingGroupName']
+        elif len(tagsResponse['Tags']) == 0:
+            currentReadyASG = asg['AutoScalingGroupName']
+        else:
+            logger.info('More than 1 ASG contains Active/Ready tags. Please check.')
+    return currentActiveASG,currentReadyASG
+
+def attachASGtoTG(autoscalingClient, targetGroupARN, asgName):
+    logger.info('Attaching ASG {} to TG {}'.format(asgName,targetGroupARN))
+    response = autoscalingClient.attach_load_balancer_target_groups(
+        AutoScalingGroupName=asgName,
+        TargetGroupARNs=[
+            targetGroupARN,
+        ]
+    )
