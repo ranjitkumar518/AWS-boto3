@@ -37,14 +37,10 @@ def lambda_handler(event, context):
         region = decoded_parameters['Region']
         targetAccountName = decoded_parameters['TargetAccountName']
 
-        if targetAccountName == "preprod":
+        if targetAccountName == "dev":
             crossAccountRoleARN = os.environ['CROSS_ACCOUNT_ROLE_ARN_PREPROD']
-        elif targetAccountName == "commerce-dev":
-            crossAccountRoleARN = os.environ['CROSS_ACCOUNT_ROLE_ARN_COMMERCE_DEV']
-        elif targetAccountName == "estore-global":
-            crossAccountRoleARN = os.environ['CROSS_ACCOUNT_ROLE_ARN_ESTORE']
-        elif targetAccountName == "estore-global-prd":
-            crossAccountRoleARN = os.environ['CROSS_ACCOUNT_ROLE_ARN_ESTORE_PROD']            
+        elif targetAccountName == "preprod":
+            crossAccountRoleARN = os.environ['CROSS_ACCOUNT_ROLE_ARN_COMMERCE_DEV']           
         elif targetAccountName == "prod":
             crossAccountRoleARN = os.environ['CROSS_ACCOUNT_ROLE_ARN_PROD']
 
@@ -89,3 +85,30 @@ def lambda_handler(event, context):
     except Exception as e:
         logger.error('Failed: {}'.format(e), exc_info=True)
         sendFailureCodepipeline(jobId, 'Promotion failed unexpectedly: {}'.format(e))
+ 
+def validatePipelineInputParameters(parameters):
+    invalidCount = 0
+    if 'ASGServiceTag' not in parameters:
+        logger.error("Missing ASGServiceTag in UserParameters of Promote stage")
+        invalidCount=+1
+    if 'FunctionARN' not in parameters:
+        logger.error("Missing FunctionARN in UserParameters of Promote stage")
+        invalidCount=+1
+    if 'TargetAccountName' not in parameters:
+        logger.error("Missing TargetAccountName in UserParameters of Promote stage")
+        invalidCount=+1
+    if 'Region' not in parameters:
+        logger.error("Missing Region in UserParameters of Promote stage")
+        invalidCount=+1
+    if invalidCount>0:
+        return False
+    logger.info("Passed validation of all pipeline input parameters")
+    return True
+
+def sendSuccessCodepipeline(job, message):
+    logger.info('Sending success signal to CodePipeline')
+    code_pipeline.put_job_success_result(jobId=job)
+
+def sendFailureCodepipeline(job, message):
+    logger.info('Sending failure signal to CodePipeline')
+    code_pipeline.put_job_failure_result(jobId=job, failureDetails={'message': message, 'type': 'JobFailed'})
