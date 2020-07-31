@@ -146,3 +146,16 @@ def detachASGfromTG(autoscalingClient, targetGroupARN, asgName):
             response = dict(statusMessage='Success')
         else:
             raise ClientError
+
+def getTargetGroupARN(client, targetGroupName):
+    logger.info('Fetching Target Group ARN')
+    targetGroupARN = None
+    response = client.describe_target_groups(
+        Names=[
+            targetGroupName,
+        ],
+    )
+    for tg in response['TargetGroups']:
+        targetGroupARN = tg['TargetGroupArn']
+    return targetGroupARN
+
