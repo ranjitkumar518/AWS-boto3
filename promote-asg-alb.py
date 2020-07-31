@@ -175,4 +175,17 @@ def evaluateTargetGroupHealth(elbv2Client, targetGroupARN):
         logger.error("Failed to get successful health check for Target Group", exc_info=True)
         return False
     
-    
+def updateASGTags(autoscalingClient, asgName, tagValue):
+    logger.info('Updating ASG {} tag to {}'.format(asgName,tagValue))
+    response = autoscalingClient.create_or_update_tags(
+        Tags=[
+            {
+                'Key': 'Cfn-Create-Action',
+                'PropagateAtLaunch': True,
+                'ResourceId': asgName,
+                'ResourceType': 'auto-scaling-group',
+                'Value': tagValue,
+            },
+        ],
+    )
+    logger.info('Tag update response {}'.format(response))    
