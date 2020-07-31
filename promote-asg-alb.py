@@ -159,3 +159,20 @@ def getTargetGroupARN(client, targetGroupName):
         targetGroupARN = tg['TargetGroupArn']
     return targetGroupARN
 
+def evaluateTargetGroupHealth(elbv2Client, targetGroupARN):
+    logger.info('Evaluating health of all targets of Target Group ARN {}'.format(targetGroupARN))
+    waiter = elbv2Client.get_waiter('target_in_service')
+    try:
+        waiter.wait(
+            TargetGroupArn=targetGroupARN,
+            WaiterConfig={
+                'Delay': 15,
+                'MaxAttempts': 21
+            }
+        )
+        return True
+    except Exception as e:
+        logger.error("Failed to get successful health check for Target Group", exc_info=True)
+        return False
+    
+    
