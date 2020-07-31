@@ -130,3 +130,19 @@ def attachASGtoTG(autoscalingClient, targetGroupARN, asgName):
             targetGroupARN,
         ]
     )
+
+def detachASGfromTG(autoscalingClient, targetGroupARN, asgName):
+    logger.info('Detaching ASG {} from TG {}'.format(asgName,targetGroupARN))
+    response = autoscalingClient.detach_load_balancer_target_groups(
+        AutoScalingGroupName=asgName,
+        TargetGroupARNs=[
+            targetGroupARN,
+        ]
+    )
+    except ClientError as e:
+        errorMessage = '{}'.format(e)
+        if errorMessage.find("Trying to remove Target Groups that are not part of the group"):
+            logger.error('Client error occurred: ' + errorMessage , exc_info=True)
+            response = dict(statusMessage='Success')
+        else:
+            raise ClientError
