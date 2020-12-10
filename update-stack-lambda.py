@@ -1,3 +1,7 @@
+### Prerequisites for the lambda to run
+## lambda env: Python 3.6
+## Required IAM role access to Allow: cloudformation:DescribeStacks,  Allow: cloudformation:UpdateStack
+
 import boto3
 cl = boto3.client('cloudformation')
 def handler(event, context):
